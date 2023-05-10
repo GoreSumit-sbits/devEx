@@ -1,0 +1,105 @@
+<h1>DX-Button</h1>
+<dx-button text="Click me" (onClick)="hello()"> </dx-button>
+<div *ngIf="!products">
+  <h1>Array Data</h1>
+
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="customers"
+    keyExpr="ID"
+    [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']"
+    [showBorders]="true"
+  >
+  </dx-data-grid>
+</div>
+<div id="events">
+  <div>
+    <div class="caption"> Fired events </div>
+    <dx-button id="clear" text="Clear" (onClick)="clearEvents()"></dx-button>
+  </div>
+  <ul>
+    <li *ngFor="let event of events">{{ event }}</li>
+  </ul>
+</div>
+
+<div *ngIf="products|async as products">
+  <h1>Products Api</h1>
+
+  <dx-data-grid
+    id="gridContainer"
+    height="550px"
+    [dataSource]="products1"
+    [keyExpr]="products1.id"
+    [showBorders]="true"
+    [remoteOperations]="true"
+    (onEditingStart)="editingStart($event);logEvent('EditingStart')"
+    (onInitNewRow)="logEvent('InitNewRow')"
+    (onRowInserting)="logEvent('RowInserting')"
+    (onRowInserted)="logEvent('RowInserted')"
+    (onRowUpdating)="logEvent('RowUpdating')"
+    (onRowUpdated)="logEvent('RowUpdated')"
+    (onRowRemoving)="onDelete($event);logEvent('RowRemoving')"
+    (onRowRemoved)="logEvent('RowRemoved')"
+    (onSaving)="onSaving($event);logEvent('Saving')"
+    (onSaved)="logEvent('Saved')"
+    (onEditCanceling)="logEvent('EditCanceling')"
+    (onEditCanceled)="logEvent('EditCanceled')"
+  >
+    <dxo-editing
+      mode="row"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [allowAdding]="true"
+    >
+    </dxo-editing>
+    <!-- <dxo-selection mode="multiple"></dxo-selection> -->
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <!-- <dxo-sorting mode="none"></dxo-sorting> -->
+
+    <dxi-column dataField="id" caption="ID" [allowEditing]="false"></dxi-column>
+    <dxi-column
+      dataField="title"
+      caption="Title"
+      [allowEditing]="true"
+    ></dxi-column>
+    <dxi-column dataField="price" caption="Price"></dxi-column>
+    <dxi-column
+      dataField="description"
+      caption="Description"
+      [allowEditing]="false"
+    ></dxi-column>
+
+    <dxi-column caption="category">
+      <dxi-column
+        dataField="category.id"
+        caption="ID"
+        [allowEditing]="false"
+      ></dxi-column>
+      <dxi-column
+        dataField="category.name"
+        caption="Name"
+        [allowEditing]="false"
+      ></dxi-column>
+      <dxi-column
+        dataField="category.image"
+        caption="image"
+        [allowEditing]="false"
+      ></dxi-column>
+    </dxi-column>
+    <dxi-column dataField="images" caption="Images"></dxi-column>
+
+    <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+
+    <dxo-pager
+      [displayMode]="'compact'"
+      [showPageSizeSelector]="true"
+      [showInfo]="true"
+      [allowedPageSizes]="[20,50,100]"
+    >
+    </dxo-pager>
+  </dx-data-grid>
+</div>
+
+
