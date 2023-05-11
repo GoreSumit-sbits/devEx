@@ -1,7 +1,9 @@
 import { Component, OnInit, enableProdMode } from '@angular/core';
 import { Change, CommonService, Customer, Order } from './common.service';
-import {map} from 'rxjs/operators'
+import {map, mergeMap} from 'rxjs/operators'
 import { Observable } from 'rxjs';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModaldataComponent } from './modaldata/modaldata.component';
 
 export interface Products{
   id:number,
@@ -24,37 +26,60 @@ export interface Products{
 })
 export class AppComponent implements OnInit {
   title = 'DevEx';
+  closeResult!: string;
 
-  logEvent(eventName: string) {
-    this.events.unshift(eventName);
+
+  // openModal(event:any){
+
+  //   const modalref=this.modalService.open( ModaldataComponent,{ ariaLabelledBy: 'modal-basic-title' })
+  //   modalref.componentInstance.productData = event.data;
+  //   modalref.componentInstance.updatedProduct
+  //   .pipe(mergeMap((data:any) =>this.service.editProduct(data.value)))
+  //   .subscribe((i:any)=>{
+
+  //     modalref.close(i)
+  //   })
+
+  //   console.log(event, "EDITING START EVENT");
+
+
+
+  // }
+
+  updatedProduct:any
+
+  savingStart(event:any){
+    console.log(event, "SAVINGSTARTEVENT");
+    
+
   }
 
 
-  productID:number=0;
-
-  editingStart(event:any){
-    this.productID=event.data.id
-  }
-
-  onSaving(event:any){
-    if(event){
-      event.cancel = true;
-      const data = event.changes[0].data
-      this.service.editProduct(this.productID,data).subscribe(i=>{
-        console.log(i)
-        event.cancel =false
-      })
-    }
-  }
-  onDelete(event:any){
+  editRow(event:any){
     event.cancel=true
+    const id=event.oldData.id
+    const data = {title:event.newData.title,price:event.newData.price}
+    this.service.editProduct(id,data).subscribe(i=>{
+      console.log(i, "LOG AFTER ROWUPDATING");
+      event.cancel=false
 
-        console.log(event);
-
-
-
+    })
 
   }
+
+  deleteRow(event:any){
+    const id = event.data.id;
+    this.service.deleteProduct(id).subscribe(i=>{
+      console.log(i);
+
+    })
+
+  }
+  addRow(event:any){
+    console.log(event);
+
+  }
+
   clearEvents() {
     this.events = [];
   }
@@ -68,7 +93,7 @@ export class AppComponent implements OnInit {
   changes: Change<Order>[] = [];
 
 
-  constructor(private service:CommonService){
+  constructor(private service:CommonService,private modalService:NgbModal){
     this.customers = service.getCustomers();
   }
   ngOnInit(): void {

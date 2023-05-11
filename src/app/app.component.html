@@ -29,9 +29,26 @@
     id="gridContainer"
     height="550px"
     [dataSource]="products1"
+    [showBorders]="true"
+    [remoteOperations]="true"
+    (onRowUpdating)="editRow($event)"
+    (onRowRemoving)="deleteRow($event)"
+    (onRowInserting)="addRow($event)"
+    [repaintChangesOnly]="true"
+
+
+
+
+  >
+
+  <!-- <dx-data-grid
+    id="gridContainer"
+    height="550px"
+    [dataSource]="products1"
     [keyExpr]="products1.id"
     [showBorders]="true"
     [remoteOperations]="true"
+
     (onEditingStart)="editingStart($event);logEvent('EditingStart')"
     (onInitNewRow)="logEvent('InitNewRow')"
     (onRowInserting)="logEvent('RowInserting')"
@@ -44,19 +61,20 @@
     (onSaved)="logEvent('Saved')"
     (onEditCanceling)="logEvent('EditCanceling')"
     (onEditCanceled)="logEvent('EditCanceled')"
-  >
-    <dxo-editing
+  > -->
+    <!-- <dxo-editing
       mode="row"
       [allowUpdating]="true"
       [allowDeleting]="true"
       [allowAdding]="true"
     >
-    </dxo-editing>
+    </dxo-editing> -->
     <!-- <dxo-selection mode="multiple"></dxo-selection> -->
     <dxo-filter-row [visible]="true"></dxo-filter-row>
     <dxo-load-panel [enabled]="true"></dxo-load-panel>
     <dxo-scrolling mode="virtual"></dxo-scrolling>
     <!-- <dxo-sorting mode="none"></dxo-sorting> -->
+
 
     <dxi-column dataField="id" caption="ID" [allowEditing]="false"></dxi-column>
     <dxi-column
@@ -69,6 +87,7 @@
       dataField="description"
       caption="Description"
       [allowEditing]="false"
+
     ></dxi-column>
 
     <dxi-column caption="category">
@@ -88,7 +107,12 @@
         [allowEditing]="false"
       ></dxi-column>
     </dxi-column>
-    <dxi-column dataField="images" caption="Images"></dxi-column>
+    <!-- <dxi-column dataField="images" caption="Images"></dxi-column> -->
+    <dxo-editing mode="row" [allowUpdating]="true" refreshMode="reshape" [allowDeleting]="true" [allowAdding]="true" [useIcons]="true">
+      <dxo-texts confirmDeleteMessage="DELETE?" addRow="Add new employee">
+      </dxo-texts>
+  </dxo-editing>
+
 
     <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
 
@@ -100,6 +124,29 @@
     >
     </dxo-pager>
   </dx-data-grid>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 

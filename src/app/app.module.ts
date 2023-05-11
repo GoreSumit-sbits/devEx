@@ -5,11 +5,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DevExtremeModule, DxButtonModule, DxDataGridModule } from 'devextreme-angular';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModaldataComponent } from './modaldata/modaldata.component';
+import { DexComponent } from './dex/dex.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ModaldataComponent,
+    DexComponent
   ],
   imports: [
     BrowserModule,
@@ -17,7 +23,10 @@ import { DevExtremeModule, DxButtonModule, DxDataGridModule } from 'devextreme-a
     DevExtremeModule,
     DxButtonModule,
     DxDataGridModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

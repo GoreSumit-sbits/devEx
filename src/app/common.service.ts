@@ -184,7 +184,13 @@ export class CommonService {
     return this.http.get("https://api.escuelajs.co/api/v1/products")
   }
 
-  editProduct(id:number,data:any){
+  editProduct(id:number,data:Object){
+    console.log(data,"DATA IN API CALL");
+
     return this.http.put(`https://api.escuelajs.co/api/v1/products/${id}`,data)
+  }
+
+  deleteProduct(id:number){
+    return this.http.delete(`https://api.escuelajs.co/api/v1/products/${id}`)
   }
 }
